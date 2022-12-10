@@ -35,7 +35,7 @@
                     <a class="nav-link" asp-area="" asp-controller="Categories" asp-action="Index">Category</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" asp-area="" asp-controller="User" asp-action="CreateUser">Create User</a>
+                    <a class="nav-link" asp-area="" asp-controller="User" asp-action="CreateStaff">Add a Staff</a>
                 </li>
             }
 
@@ -49,8 +49,9 @@
             {
                 <li class="nav-item">
                     <a class="nav-link" asp-area="" asp-controller="User" asp-action="Login">Login</a>
-                    <a class="nav-link" asp-area="" asp-controller="User" asp-action="Registration">Register</a>
-
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-area="" asp-controller="User" asp-action="MemberRegistration">Register</a>
                 </li>
              }
             </ul>
@@ -62,7 +63,7 @@
                         <a class="nav-link" asp-area="" asp-controller="User" asp-action="Logout">Logout</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" asp-controller="User" asp-action="ChangePassword">Forgot Password</a>
+                        <a class="nav-link" asp-controller="User" asp-action="ChangePassword">Change Password</a>
                     </li>
                 }
             </ul>

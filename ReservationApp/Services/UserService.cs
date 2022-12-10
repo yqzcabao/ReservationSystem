@@ -32,12 +32,13 @@ namespace ReservationApp.Services
             }
             ApplicationUser user = new ApplicationUser()
             {
+                PhoneNumber = model.MobilePhone,
                 Email = model.Email,
                 SecurityStamp = Guid.NewGuid().ToString(),
                 UserName = model.UserName,
                 FirstName = model.FirstName,
                 LastName = model.LastName,
-                EmailConfirmed = true,
+                EmailConfirmed = true,                
                 PhoneNumberConfirmed = true,
             };
             var result = await userManager.CreateAsync(user, model.Password);

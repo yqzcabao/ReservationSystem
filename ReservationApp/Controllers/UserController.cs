@@ -15,36 +15,52 @@ namespace ReservationApp.Controllers
             _authService = authService;
         }
 
-        public IActionResult Registration()
+        public IActionResult MemberRegistration()
         {
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Registration(RegistrationModel model)
+        public async Task<IActionResult> MemberRegistration(RegistrationModel model)
         {
             if (!ModelState.IsValid) { return View(model); }
-            model.Role = "user";
+            model.Role = "member";
             var result = await _authService.RegisterAsync(model);
             TempData["msg"] = result.Message;
-            return RedirectToAction(nameof(Registration));
+            return RedirectToAction(nameof(MemberRegistration));
         }
 
-        public IActionResult CreateUser()
+        //CreateAdmin is for create a sytem admin, admin can create staff account
+        public IActionResult CreateAdmin()
         {
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateUser(RegistrationModel model)
+        public async Task<IActionResult> CreateAdmin(RegistrationModel model)
         {
             if (!ModelState.IsValid) { return View(model); }
             model.Role = "admin";
             var result = await _authService.RegisterAsync(model);
             TempData["msg"] = result.Message;
-            return RedirectToAction(nameof(Registration));
+            return RedirectToAction(nameof(CreateAdmin));
         }
 
+        //CreateStaff is for create a normal staff account which can capture an order or view all the orders.
+        public IActionResult CreateStaff()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateStaff(RegistrationModel model)
+        {
+            if (!ModelState.IsValid) { return View(model); }
+            model.Role = "staff";
+            var result = await _authService.RegisterAsync(model);
+            TempData["msg"] = result.Message;
+            return RedirectToAction(nameof(CreateStaff));
+        }
 
         public IActionResult Login()
         {
