@@ -1,0 +1,56 @@
+﻿@model IEnumerable<ReservationApp.Models.SittingTable>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<div class="container p-3">
+    <div>
+        <h2 class="text-primary">Sitting Table List</h2>
+    </div>
+    <div class="col-6 align-items-end">
+         @if (User.IsInRole("admin"))
+      {
+        <a asp-controller="SittingTable" asp-action="Create" class="btn btn-primary" width="20%"><i class="bi bi-plus-circle-fill"></i>&nbsp;Add New Sitting Table</a>
+      }
+    </div>
+</div>
+<br/>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Area)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Table)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Capacity)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Area)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Table)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Capacity)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.SittingTableId" class="btn btn-outline-primary mx-4">Edit</a> |
+                @*<a asp-action="Details" asp-route-id="@item.SittingTableId" class="btn btn-outline-primary mx-4">Details</a> |*@
+                <a asp-action="Delete" asp-route-id="@item.SittingTableId" class="btn btn-outline-primary mx-4">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -362,15 +362,15 @@ namespace ReservationApp.Migrations
                     b.Property<string>("SittingDescription")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<TimeSpan>("SittingEndTime")
-                        .HasColumnType("time");
+                    b.Property<DateTime>("SittingEndTime")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("SittingName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<TimeSpan>("SittingStartTime")
-                        .HasColumnType("time");
+                    b.Property<DateTime>("SittingStartTime")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("SittingId");
 
@@ -493,13 +493,13 @@ namespace ReservationApp.Migrations
             modelBuilder.Entity("ReservationApp.Models.ReservationSitting", b =>
                 {
                     b.HasOne("ReservationApp.Models.Reservation", "Reservation")
-                        .WithMany("ReservationSitting")
+                        .WithMany()
                         .HasForeignKey("ReservationID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("ReservationApp.Models.SittingTable", "SittingTable")
-                        .WithMany("ReservationSitting")
+                        .WithMany()
                         .HasForeignKey("SittingTableID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -526,16 +526,6 @@ namespace ReservationApp.Migrations
 
                     b.Navigation("Stock")
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("ReservationApp.Models.Reservation", b =>
-                {
-                    b.Navigation("ReservationSitting");
-                });
-
-            modelBuilder.Entity("ReservationApp.Models.SittingTable", b =>
-                {
-                    b.Navigation("ReservationSitting");
                 });
 #pragma warning restore 612, 618
         }

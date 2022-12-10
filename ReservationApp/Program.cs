@@ -16,6 +16,7 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
        .AddDefaultTokenProviders();
 
 builder.Services.AddScoped<IProductservices, ProductServices>();
+builder.Services.AddScoped<IReservationService, ReservationService>();
 builder.Services.AddScoped<ISittingService, SittingService>();
 builder.Services.AddScoped<IFileService, FileService>();
 builder.Services.AddScoped<IUserService, UserService>();

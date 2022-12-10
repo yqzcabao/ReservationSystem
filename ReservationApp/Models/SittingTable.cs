@@ -13,7 +13,7 @@ namespace ReservationApp.Models
         public string Table { get; set; }
         [Required]
         public int Capacity { get; set; }
-        public List<ReservationSitting> ReservationSitting { get; set; }
+        //public List<ReservationSitting> ReservationSitting { get; set; }
 
     }
 }

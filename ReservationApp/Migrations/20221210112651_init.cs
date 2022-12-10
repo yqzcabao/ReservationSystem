@@ -76,8 +76,8 @@ namespace ReservationApp.Migrations
                     SittingId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     SittingName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    SittingStartTime = table.Column<TimeSpan>(type: "time", nullable: false),
-                    SittingEndTime = table.Column<TimeSpan>(type: "time", nullable: false),
+                    SittingStartTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    SittingEndTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     SittingDescription = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>

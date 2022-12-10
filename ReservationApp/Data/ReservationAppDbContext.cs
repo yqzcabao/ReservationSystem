@@ -14,22 +14,22 @@ namespace ReservationApp.Data
             
         }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Sitting>(builder =>
-            {
-                // Date is a DateOnly property and date on database
-               // builder.Property(x => x.Date)
-               //     .HasConversion<DateOnlyConverter, DateOnlyComparer>();
+        //protected override void OnModelCreating(ModelBuilder modelBuilder)
+        //{
+        //    modelBuilder.Entity<Sitting>(builder =>
+        //    {
+        //        // Date is a DateOnly property and date on database
+        //       // builder.Property(x => x.Date)
+        //       //     .HasConversion<DateOnlyConverter, DateOnlyComparer>();
 
-                // Time is a TimeOnly property and time on database
-                builder.Property(x => x.SittingStartTime)
-                    .HasConversion<TimeOnlyConverter, TimeOnlyComparer>();
-                builder.Property(x => x.SittingEndTime)
-                   .HasConversion<TimeOnlyConverter, TimeOnlyComparer>();
-            });
-            base.OnModelCreating(modelBuilder);
-        }
+        //        // Time is a TimeOnly property and time on database
+        //        builder.Property(x => x.SittingStartTime)
+        //            .HasConversion<TimeOnlyConverter, TimeOnlyComparer>();
+        //        builder.Property(x => x.SittingEndTime)
+        //           .HasConversion<TimeOnlyConverter, TimeOnlyComparer>();
+        //    });
+        //    base.OnModelCreating(modelBuilder);
+        //}
 
         public DbSet<ReservationApp.Models.Product> Product { get; set; }= default;
         public DbSet<ReservationApp.Models.Sitting> Sitting { get; set; } = default!;

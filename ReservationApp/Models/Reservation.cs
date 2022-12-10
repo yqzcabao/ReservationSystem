@@ -21,6 +21,6 @@ namespace ReservationApp.Models
         public string AdditionNotes { get; set; }
         public DateTime BookingDateTime { get; set; } = new DateTime();
 
-        public List<ReservationSitting> ReservationSitting { get; set; }
+        //public List<ReservationSitting> ReservationSitting { get; set; }
     }
 }

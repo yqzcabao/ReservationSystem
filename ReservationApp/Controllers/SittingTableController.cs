@@ -10,86 +10,86 @@ using ReservationApp.Models;
 
 namespace ReservationApp.Controllers
 {
-    public class SittingController : Controller
+    public class SittingTableController : Controller
     {
         private readonly ReservationAppDbContext _context;
 
-        public SittingController(ReservationAppDbContext context)
+        public SittingTableController(ReservationAppDbContext context)
         {
             _context = context;
         }
 
-        // GET: sitting
+        // GET: sittingTable
         public async Task<IActionResult> Index()
         {
-              return View(await _context.Sitting.ToListAsync());
+              return View(await _context.SittingTable.ToListAsync());
         }
 
-        // GET: sitting/Details/5
+        // GET: sittingTable/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Sitting == null)
+            if (id == null || _context.SittingTable == null)
             {
                 return NotFound();
             }
 
-            var category = await _context.Sitting
-                .FirstOrDefaultAsync(m => m.SittingId == id);
-            if (category == null)
+            var sittingTable = await _context.SittingTable
+                .FirstOrDefaultAsync(m => m.SittingTableId == id);
+            if (sittingTable == null)
             {
                 return NotFound();
             }
 
-            return View(category);
+            return View(sittingTable);
         }
 
-        // GET: sitting/Create
+        // GET: sittingTable/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: sitting/Create
+        // POST: sittingTable/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Create([Bind("SittingID,SittingName,SittingStartTime,SittingEndTime,SittingDescription")] Sitting category)
-        public async Task<IActionResult> Create(Sitting category)
+        public async Task<IActionResult> Create([Bind("SittingTableID,Area,Table,Capacity")] SittingTable sittingTable)
+        //public async Task<IActionResult> Create(SittingTable sittingTable)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(category);
+                _context.Add(sittingTable);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(category);
+            return View(sittingTable);
         }
 
-        // GET: sitting/Edit/5
+        // GET: sittingTable/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Sitting == null)
+            if (id == null || _context.SittingTable == null)
             {
                 return NotFound();
             }
 
-            var sitting = await _context.Sitting.FindAsync(id);
-            if (sitting == null)
+            var sittingTable = await _context.SittingTable.FindAsync(id);
+            if (sittingTable == null)
             {
                 return NotFound();
             }
-            return View(sitting);
+            return View(sittingTable);
         }
 
-        // POST: sitting/Edit/5
+        // POST: sittingTable/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("SittingId,SittingName,SittingStartTime,SittingEndTime,SittingDescription")] Sitting category)        
+        public async Task<IActionResult> Edit(int id, [Bind("SittingTableId,Area,Table,Capacity")] SittingTable sittingTable)
         {
-            if (id != category.SittingId)
+            if (id != sittingTable.SittingTableId)
             {
                 return NotFound();
             }
@@ -98,12 +98,12 @@ namespace ReservationApp.Controllers
             {
                 try
                 {
-                    _context.Update(category);
+                    _context.Update(sittingTable);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CategoryExists(category.SittingId))
+                    if (!sittingTableExists(sittingTable.SittingTableId))
                     {
                         return NotFound();
                     }
@@ -114,49 +114,49 @@ namespace ReservationApp.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(category);
+            return View(sittingTable);
         }
 
-        // GET: sitting/Delete/5
+        // GET: sittingTable/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Sitting == null)
+            if (id == null || _context.SittingTable == null)
             {
                 return NotFound();
             }
 
-            var category = await _context.Sitting
-                .FirstOrDefaultAsync(m => m.SittingId == id);
-            if (category == null)
+            var sittingTable = await _context.SittingTable
+                .FirstOrDefaultAsync(m => m.SittingTableId == id);
+            if (sittingTable == null)
             {
                 return NotFound();
             }
 
-            return View(category);
+            return View(sittingTable);
         }
 
-        // POST: sitting/Delete/5
+        // POST: sittingTable/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Sitting == null)
+            if (_context.SittingTable == null)
             {
-                return Problem("Entity set 'ReservationAppDbContext.Category'  is null.");
+                return Problem("Entity set 'ReservationAppDbContext.SittingTable'  is null.");
             }
-            var category = await _context.Sitting.FindAsync(id);
-            if (category != null)
+            var sittingTable = await _context.SittingTable.FindAsync(id);
+            if (sittingTable != null)
             {
-                _context.Sitting.Remove(category);
+                _context.SittingTable.Remove(sittingTable);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CategoryExists(int id)
+        private bool sittingTableExists(int id)
         {
-          return _context.Sitting.Any(e => e.SittingId == id);
+          return _context.SittingTable.Any(e => e.SittingTableId == id);
         }
     }
 }

@@ -6,8 +6,6 @@
 
 <h1>Sitting</h1>
 
-<hr />
-
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
          <div class="border p-3 mt-4">
@@ -22,13 +20,13 @@
         <br/>
         <div class="mb3">         
             <label asp-for="SittingStartTime" class="control-label"></label>
-            <input asp-for="SittingStartTime" class="form-control" />
+            <input asp-for="SittingStartTime" class="form-control" type="time"/>
             <span asp-validation-for="SittingStartTime" class="text-danger"></span>
         </div>
         <br/>
         <div class="mb3">         
             <label asp-for="SittingEndTime" class="control-label"></label>
-            <input asp-for="SittingEndTime" class="form-control" />
+            <input asp-for="SittingEndTime" class="form-control" type="time"/>
             <span asp-validation-for="SittingEndTime" class="text-danger"></span>
         </div>
         <br/>

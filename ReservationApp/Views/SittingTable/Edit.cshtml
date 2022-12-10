@@ -1,0 +1,40 @@
+﻿@model ReservationApp.Models.SittingTable
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit Sitting Table</h1>
+
+        <form asp-action="Edit" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="SittingTableId" />
+         <div class="border p-3 mt-4">
+        <div class="row pb-2">
+            <h1 class="text-primary">Edit Sitting Table</h1>
+        </div>
+        <div class="mb3">         
+            <label asp-for="Area" class="control-label"></label>
+            <input asp-for="Area" class="form-control" />
+            <span asp-validation-for="Area" class="text-danger"></span>
+        </div>
+        <br/>
+        <div class="mb3">         
+            <label asp-for="Table" class="control-label"></label>
+            <input asp-for="Table" class="form-control"/>
+            <span asp-validation-for="Table" class="text-danger"></span>
+        </div>
+        <br/>
+        <div class="mb3">         
+            <label asp-for="Capacity" class="control-label"></label>
+            <input asp-for="Capacity" class="form-control" type="number"/>
+            <span asp-validation-for="Capacity" class="text-danger"></span>
+        </div>
+
+        <br />
+        <br />
+        <button type="submit" class="btn btn-primary">Update</button>
+        <a asp-controller="SittingTable" asp-action="Index" class="btn btn-primary">Back To List</a>
+        </div>
+        </form>
+

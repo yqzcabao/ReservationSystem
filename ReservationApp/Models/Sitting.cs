@@ -10,9 +10,13 @@ namespace ReservationApp.Models
         [Required]
         public string SittingName { get; set; }
         [Required]
-        public TimeOnly SittingStartTime { get; set; }
+        [DataType(DataType.Time)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:HH:mm}")]
+        public DateTime SittingStartTime { get; set; }
         [Required]
-        public TimeOnly SittingEndTime { get; set; }
+        [DataType(DataType.Time)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:HH:mm}")]
+        public DateTime SittingEndTime { get; set; }
         public string? SittingDescription { get; set; }
         
         //public List<Product> Product { get; set; } = new List<Product>();

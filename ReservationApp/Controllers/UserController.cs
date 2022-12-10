@@ -98,7 +98,7 @@ namespace ReservationApp.Controllers
             return View();
         }
 
-        // sdhfsdhdshfsdu udhffdui [Authorize]
+        // [Authorize]
         [HttpPost]
         public async Task<IActionResult> ChangePassword(ChangePasswordModel model)
         {

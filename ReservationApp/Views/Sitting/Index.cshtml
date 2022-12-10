@@ -25,6 +25,12 @@
                 @Html.DisplayNameFor(model => model.SittingName)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.SittingStartTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SittingEndTime)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.SittingDescription)
             </th>
             <th></th>
@@ -37,12 +43,18 @@
                 @Html.DisplayFor(modelItem => item.SittingName)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.SittingStartTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SittingEndTime)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.SittingDescription)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.SittingId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.SittingId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.SittingId">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.SittingId" class="btn btn-outline-primary mx-4">Edit</a> |
+                @*<a asp-action="Details" asp-route-id="@item.SittingId" class="btn btn-outline-primary mx-4">Details</a> |*@
+                <a asp-action="Delete" asp-route-id="@item.SittingId" class="btn btn-outline-primary mx-4">Delete</a>
             </td>
         </tr>
 }
