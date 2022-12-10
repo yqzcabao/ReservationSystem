@@ -2,7 +2,7 @@
 
 namespace ReservationApp.Services
 {
-    public interface ICategoryService
+    public interface ISittingService
     {
         public bool Add(Sitting model);
 

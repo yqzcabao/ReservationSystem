@@ -10,22 +10,22 @@ using ReservationApp.Models;
 
 namespace ReservationApp.Controllers
 {
-    public class CategoriesController : Controller
+    public class SittingController : Controller
     {
         private readonly ReservationAppDbContext _context;
 
-        public CategoriesController(ReservationAppDbContext context)
+        public SittingController(ReservationAppDbContext context)
         {
             _context = context;
         }
 
-        // GET: Categories
+        // GET: sitting
         public async Task<IActionResult> Index()
         {
               return View(await _context.Sitting.ToListAsync());
         }
 
-        // GET: Categories/Details/5
+        // GET: sitting/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Sitting == null)
@@ -43,13 +43,13 @@ namespace ReservationApp.Controllers
             return View(category);
         }
 
-        // GET: Categories/Create
+        // GET: sitting/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Categories/Create
+        // POST: sitting/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -65,7 +65,7 @@ namespace ReservationApp.Controllers
             return View(category);
         }
 
-        // GET: Categories/Edit/5
+        // GET: sitting/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Sitting == null)
@@ -81,7 +81,7 @@ namespace ReservationApp.Controllers
             return View(category);
         }
 
-        // POST: Categories/Edit/5
+        // POST: sitting/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -116,7 +116,7 @@ namespace ReservationApp.Controllers
             return View(category);
         }
 
-        // GET: Categories/Delete/5
+        // GET: sitting/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Sitting == null)
@@ -134,7 +134,7 @@ namespace ReservationApp.Controllers
             return View(category);
         }
 
-        // POST: Categories/Delete/5
+        // POST: sitting/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

@@ -1,0 +1,47 @@
+﻿@model ReservationApp.Models.Sitting
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Sitting</h1>
+
+<hr />
+
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+         <div class="border p-3 mt-4">
+        <div class="row pb-2">
+            <h1 class="text-primary">Create Sitting</h1>
+        </div>
+        <div class="mb3">         
+            <label asp-for="SittingName" class="control-label"></label>
+            <input asp-for="SittingName" class="form-control" />
+            <span asp-validation-for="SittingName" class="text-danger"></span>
+        </div>
+        <br/>
+        <div class="mb3">         
+            <label asp-for="SittingStartTime" class="control-label"></label>
+            <input asp-for="SittingStartTime" class="form-control" />
+            <span asp-validation-for="SittingStartTime" class="text-danger"></span>
+        </div>
+        <br/>
+        <div class="mb3">         
+            <label asp-for="SittingEndTime" class="control-label"></label>
+            <input asp-for="SittingEndTime" class="form-control" />
+            <span asp-validation-for="SittingEndTime" class="text-danger"></span>
+        </div>
+        <br/>
+        <div class="mb3">         
+            <label asp-for="SittingDescription" class="control-label"></label>
+            <input asp-for="SittingDescription" class="form-control" />
+            <span asp-validation-for="SittingDescription" class="text-danger"></span>
+        </div>
+        <br />
+        <br />
+        <button type="submit" class="btn btn-primary">Create</button>
+        <a asp-controller="Sitting" asp-action="Index" class="btn btn-primary">Back To List</a>
+        </div>
+        </form>
+
+

@@ -15,9 +15,9 @@ namespace ReservationApp.Controllers
         ReservationAppDbContext DB;
         IProductservices IPservices;
         IFileService IFService;
-        ICategoryService ICService;
+        ISittingService ICService;
 
-        public ProductController(IFileService _IFService, ReservationAppDbContext _Db, ICategoryService _Categoryservices, IProductservices _IPservices)
+        public ProductController(IFileService _IFService, ReservationAppDbContext _Db, ISittingService _Categoryservices, IProductservices _IPservices)
         {
             ICService= _Categoryservices;
             IPservices = _IPservices;

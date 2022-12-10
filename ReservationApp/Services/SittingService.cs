@@ -2,11 +2,11 @@
 using ReservationApp.Models;
 namespace ReservationApp.Services
 {
-    public class CategoryService : ICategoryService
+    public class SittingService : ISittingService
 
     {
         ReservationAppDbContext Dbx;
-        public CategoryService(ReservationAppDbContext _Dbx)
+        public SittingService(ReservationAppDbContext _Dbx)
         {
             this.Dbx = _Dbx;
         }
