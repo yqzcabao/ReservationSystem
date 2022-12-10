@@ -1,0 +1,52 @@
+﻿@model Product
+
+
+
+<h1>Product</h1>
+<form method="post" enctype="multipart/form-data" asp-action="Create">
+    <div class="border p-3 mt-4">
+        <div class="row pb-2">
+            <h1 class="text-primary">Create Product</h1>
+        </div>
+        <div class="mb-2">
+           @* <div asp-validation-summary="All" class="text-danger"></div>*@
+            <label>Name</label>
+            <input asp-for="ProductName" class="form-control" />
+            <span asp-validation-for="ProductName" class="text-danger"></span>
+        </div>
+        <div class="mb3">x
+            <label >Description</label>
+            <input asp-for="ProductDescription" class="form-control"/>
+        </div>
+        <br />
+        <div class="mb3">
+            
+            <label>Unit price</label>
+            <input asp-for="UnitPrice" class="form-control" />
+            <span asp-validation-for="UnitPrice" class="text-danger"></span>
+
+        </div>
+        <br />
+           <div>
+                <label class="w-40">Image</label>
+                <input type="file" asp-for="ImageFile" >
+            </div>
+      
+
+        <br/>
+        <div class="input-container">
+            <label asp-for="Category" class="w-40">Category</label>
+            <select asp-items="Model.CategoryList" class="input" asp-for="Categories" multiple>
+                <option value="">--select--</option>
+            </select>
+        </div>
+        <br />
+        <br />
+        <button type="submit" class="btn btn-primary">Create</button>
+        <a asp-controller="product" asp-action="Index" class="btn btn-primary">Back To List</a>
+    </div>
+</form>
+@*
+@section Scripts{
+    <partial name="_ValidationscriptsPartial" />
+}*@

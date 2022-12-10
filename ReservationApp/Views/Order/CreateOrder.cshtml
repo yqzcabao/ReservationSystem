@@ -1,0 +1,69 @@
+﻿
+@model Order
+
+@{
+    var product = ViewData["Product"]
+    as ReservationApp.Models.Product;
+}
+<h1>Product Order</h1>
+<form id="ProductDetails" asp-action="CreateOrder" oninput="Price.value=parseInt(a.value)*parseInt(@product.UnitPrice)">
+    <div class="border p-3 mt-4">
+        <input asp-for="ProductID" value=@product.ProuctId hidden class="form-control" />
+        <div class="row pb-2">
+            <h2 class="text-primary">Product Details</h2>
+        </div>
+        <div class="mb-2">
+            <table style="font-family:Arial">
+                <tr>
+                    <td>Item Name</td>
+                    <td>@product.ProductName</td>
+                </tr>
+                <tr>
+                    <td>Item Details</td>
+                    <td>@product.ProductDescription</td>
+                </tr>
+                <tr>
+                    <td>Unit Price:</td>
+                    <td>@product.UnitPrice</td>
+                </tr>
+                <tr>
+                    <td>Available Item </td>
+                    
+                    <td>@product.Qty</td>    
+                </tr>
+
+            </table>
+        </div>
+    <div class="row pb-2">
+        <h2 class="text-primary">Order Details</h2>
+    </div>
+        <div>
+            <label>Order Details</label>
+            <input asp-for="OrderDescription" class="form-control" />
+            <span asp-validation-for="OrderDescription" class="text-danger"></span>
+        </div>
+       
+        <div class="mb3">
+            <label>Quantity</label>
+            <input asp-for="Qty" type="number" class="form-control" id="a" />
+            <label>Total Price</label>
+            <input asp-for="TotalPrice" name="Price" disabled class="form-control"/>
+            @*<output asp-for="TotalPrice" name="Price" class="form-control" for="a" />*@
+         </div>
+        <br />
+        <br />
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <a asp-controller="Product" asp-action="ProductList" class="btn btn-primary">Back To List</a>
+    </div>
+</form>
+
+
+
+
+@section Scripts{
+    @{
+        <partial name="_ValidationscriptsPartial" />
+    }
+
+}
