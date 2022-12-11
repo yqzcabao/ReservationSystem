@@ -108,5 +108,12 @@ namespace ReservationApp.Controllers
             TempData["msg"] = result.Message;
             return RedirectToAction(nameof(ChangePassword));
         }
+
+        //To get all the users
+        public async Task<IActionResult> GetAllUsers()
+        {
+            List<Users_in_Role_ViewModel> result = await _authService.GetAllUsers();
+            return View(result);
+        }
     }
 }

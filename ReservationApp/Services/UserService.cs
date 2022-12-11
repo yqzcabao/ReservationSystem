@@ -146,7 +146,27 @@ namespace ReservationApp.Services
 
         }
 
-
+        //Get all the users
+        public async Task<List<Users_in_Role_ViewModel>> GetAllUsers()
+        {
+                        
+            var users = userManager.Users.ToList();
+            List<Users_in_Role_ViewModel> result = new List<Users_in_Role_ViewModel>();
+            foreach(var user in users)
+            {
+                Users_in_Role_ViewModel model = new Users_in_Role_ViewModel();
+                model.UserId = user.Id;
+                model.Email = user.Email;
+                model.FirstName = user.FirstName;
+                model.LastName = user.LastName;
+                model.MobilePhone = user.PhoneNumber;
+                model.UserName = user.UserName;
+                var roles = userManager.GetRolesAsync(user);
+                model.Role = roles.Result[0];
+                result.Add(model);
+            }
+            return result;
+        }
 
     }
 }

@@ -1,206 +1,162 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ReservationApp.Data;
 using ReservationApp.Models;
-using ReservationApp.Services;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Transactions;
 
 namespace ReservationApp.Controllers
 {
-   
     public class ReservationController : Controller
     {
-        ReservationAppDbContext DB;
-        IProductservices IPservices;
-        IFileService IFService;
-        ISittingService ICService;
+        private readonly ReservationAppDbContext _context;
 
-        public ReservationController(IFileService _IFService, ReservationAppDbContext _Db, ISittingService _Categoryservices, IProductservices _IPservices)
+        public ReservationController(ReservationAppDbContext context)
         {
-            ICService= _Categoryservices;
-            IPservices = _IPservices;
-            DB = _Db;
-            IFService = _IFService;
+            _context = context;
         }
 
-        
-        public IActionResult Index()
+        // GET: all reservation
+        public async Task<IActionResult> Index()
         {
-          return View(IPservices.GetAllProducts());
+            return View(await _context.Sitting.ToListAsync());
         }
 
-        public IActionResult ProductList()
+        // GET: reservation/Details/5
+        public async Task<IActionResult> Details(int? id)
         {
-            return View(IPservices.GetAllProducts());
+            if (id == null || _context.Sitting == null)
+            {
+                return NotFound();
+            }
+
+            var category = await _context.Sitting
+                .FirstOrDefaultAsync(m => m.SittingId == id);
+            if (category == null)
+            {
+                return NotFound();
+            }
+
+            return View(category);
         }
 
-         
-        
-        // display create view
-        [Authorize(Roles ="admin")]
+        // GET: reservation/Create
         public IActionResult Create()
         {
-            var model = new Product();
-            model.CategoryList = ICService.List().Select(a => new SelectListItem { Text = a.SittingName, Value = a.SittingId.ToString()});
-            return View(model);
-          
-          
+            return View();
         }
 
-        // save new Product
-        //post
-        [Authorize(Roles = "admin")]
+        // POST: reservation/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Product Pobj)
+        //public async Task<IActionResult> Create([Bind("SittingID,SittingName,SittingStartTime,SittingEndTime,SittingDescription")] Sitting category)
+        public async Task<IActionResult> Create(Sitting category)
         {
-            
-            Pobj.CategoryID = Pobj.Categories;
-           
-
-            if (Pobj.ImageFile != null)
+            if (ModelState.IsValid)
             {
-                var fileReult = this.IFService.SaveImage(Pobj.ImageFile);
-                if (fileReult.Item1 == 0)
-                {
-                    TempData["msg"] = "File could not saved";
-                    return View(Pobj);
-                }
-                var imageName = fileReult.Item2;
-                Pobj.Image = imageName;
+                _context.Add(category);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
             }
-
-
-            IPservices.CreateProduct(Pobj);
-            var stock = new Stock
-            {
-                ProductId = Pobj.ProuctId,
-                Qty = 0
-            };
-            DB.Stock.Add(stock);
-            DB.SaveChanges();
-            TempData["success"] = "Product Created Successfully";
-            return RedirectToAction("Index");
-            
-
+            return View(category);
         }
 
-        // display Edit view
-       [Authorize(Roles = "admin")]
-        public IActionResult Edit(int? id)
+        // GET: reservation/Edit/5
+        public async Task<IActionResult> Edit(int? id)
         {
-           
-        //  DB.Entry<Product>.State = EntityState.Added;
-            if (id==null || id==0)
+            if (id == null || _context.Sitting == null)
             {
                 return NotFound();
             }
-            
-            var CategoryFormDb = DB.Product.Find(id);
-            var x = CategoryFormDb.Image;
-            if (CategoryFormDb==null)
+
+            var sitting = await _context.Sitting.FindAsync(id);
+            if (sitting == null)
             {
                 return NotFound();
             }
-            CategoryFormDb.CategoryList = ICService.List().Select(a => new SelectListItem { Text = a.SittingName, Value = a.SittingId.ToString() });
-
-
-            return View(CategoryFormDb);
+            return View(sitting);
         }
 
-        // Update Product
-        //post
-        [Authorize(Roles = "admin")]
+        // POST: reservation/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-
-        public IActionResult Edit(Product Pobj)
+        public async Task<IActionResult> Edit(int id, [Bind("SittingId,SittingName,SittingStartTime,SittingEndTime,SittingDescription")] Sitting category)
         {
-
-            Pobj.CategoryID = Pobj.Categories;
-
-            if (Pobj.ImageFile != null)
+            if (id != category.SittingId)
             {
-                var fileReult = this.IFService.SaveImage(Pobj.ImageFile);
-                if (fileReult.Item1 == 0)
-                {
-                    TempData["msg"] = "File could not saved";
-                    return View(Pobj);
-                }
-                var imageName = fileReult.Item2;
-                Pobj.Image = imageName;
+                return NotFound();
             }
 
-            using (var transaction = DB.Database.BeginTransaction())
+            if (ModelState.IsValid)
             {
                 try
                 {
-                    /*do something*/
-                    DB.Product.Update(Pobj);
-                    //   DB.SaveChanges();
-
-
-
-                    transaction.Commit();
+                    _context.Update(category);
+                    await _context.SaveChangesAsync();
                 }
-                catch (Exception ex)
+                catch (DbUpdateConcurrencyException)
                 {
-                    DB.Remove(Pobj);
-                    transaction.Rollback();
+                    if (!CategoryExists(category.SittingId))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
                 }
+                return RedirectToAction(nameof(Index));
             }
-
-          //  DB.Product.Update(Pobj);
-        //    DB.SaveChanges();
-
-            //  DB.Remove(Pobj);
-
-            TempData["success"] = "Product Updated Successfully";
-                return RedirectToAction("Index");
- 
-
-            //}
-            //return View(Pobj);
+            return View(category);
         }
 
-        // display Delete view
-
-        [Authorize(Roles = "admin")]
-        public IActionResult Delete(int? id)
+        // GET: reservation/Delete/5
+        public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || id == 0)
+            if (id == null || _context.Sitting == null)
             {
                 return NotFound();
             }
 
-            var CategoryFormDb = DB.Product.Find(id);
-            if (CategoryFormDb == null)
+            var category = await _context.Sitting
+                .FirstOrDefaultAsync(m => m.SittingId == id);
+            if (category == null)
             {
                 return NotFound();
             }
-            return View(CategoryFormDb);
+
+            return View(category);
         }
 
-        // Delete Product
-        //post
-        [Authorize(Roles = "admin")]
+        // POST: reservation/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public IActionResult DeletePost(int? Id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
-
-            Product product = DB.Product.FirstOrDefault(s => s.ProuctId == Id);
-            if (product !=null)
+            if (_context.Sitting == null)
             {
-                DB.Remove(product);
-                DB.SaveChanges();
-                TempData["success"] = "Product Deleted Successfully";
-                return RedirectToAction("Index");
+                return Problem("Entity set 'ReservationAppDbContext.Category'  is null.");
             }
-            return View();
+            var category = await _context.Sitting.FindAsync(id);
+            if (category != null)
+            {
+                _context.Sitting.Remove(category);
+            }
+
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
-        
+
+        private bool CategoryExists(int id)
+        {
+            return _context.Sitting.Any(e => e.SittingId == id);
+        }
     }
 }

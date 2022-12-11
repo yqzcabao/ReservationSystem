@@ -7,5 +7,6 @@ namespace ReservationApp.Services
         Task<Status> LoginAsync(LoginModel model);
         Task LogoutAsync();
         Task<Status> ChangePasswordAsync(ChangePasswordModel model, string username);
+        Task<List<Users_in_Role_ViewModel>> GetAllUsers();
     }
 }
