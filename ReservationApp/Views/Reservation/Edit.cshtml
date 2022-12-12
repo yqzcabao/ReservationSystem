@@ -1,50 +1,85 @@
-﻿@model Product
-<h1>Product</h1>
-<form asp-action="Edit" enctype="multipart/form-data" method="post">
-    <input asp-for="ProuctId" hidden/>
+﻿@model ReservationIndex
+
+
+<h1>Reservation</h1>
+<form method="post" enctype="multipart/form-data" asp-action="Edit">
     <div class="border p-3 mt-4">
         <div class="row pb-2">
-            <h1 class="text-primary">Edit Product</h1>
+            <h1 class="text-primary">Update Reservation</h1>
         </div>
+        <input asp-for="ReservationId" hidden/>
+        <input asp-for="UserID" hidden/>
+      <input asp-for="FirstName" hidden/>
+      <input asp-for="LastName" hidden/>
         <div class="mb-2">
-          
-            <label>Name</label>
-            <input asp-for="ProductName" class="form-control" />
-            <span asp-validation-for="ProductName" class="text-danger"></span>
+           @* <div asp-validation-summary="All" class="text-danger"></div>*@
+            <label asp-for="StartDateTime" class="control-label"></label>
+            <input asp-for="StartDateTime" class="form-control" type="datetime-local"/>
+            <span asp-validation-for="StartDateTime" class="text-danger"></span>
         </div>
-        <div class="mb3">x
-            <label >Description</label>
-            <input asp-for="ProductDescription" class="form-control"/>
-        </div>
+        <br/>
         <div class="mb3">
-
-            <label>Unit price</label>
-            <input asp-for="UnitPrice" class="form-control" />
-            <span asp-validation-for="UnitPrice" class="text-danger"></span>
-
+            <label asp-for="Duration" class="control-label"></label>
+            <input asp-for="Duration" class="form-control" type="number"/>
+            <span asp-validation-for="Duration" class="text-danger"></span>
         </div>
+        <br/>
+        <div class="mb3">            
+            <label asp-for="NumberOfGuests" class="control-label"></label>
+            <input asp-for="NumberOfGuests" class="form-control" type="number"/>
+            <span asp-validation-for="NumberOfGuests" class="text-danger"></span>
+        </div>
+        <div class="mb3">            
+            <label asp-for="AdditionNotes" class="control-label"></label>
+            <input asp-for="AdditionNotes" class="form-control"/>
+            <span asp-validation-for="AdditionNotes" class="text-danger"></span>
+        </div>
+        <br/>
+             <div class="form-group"> 
+                     <label asp-for="Area" class="control-label"></label> 
+                     <select asp-for="Area"  class="form-control" asp-items="@(new SelectList(ViewBag.TableArea, "Text", "Value", Model.Area))">
+                         <option value="">Select Table Area</option>                         
+                     </select>  
+             </div>
+             <div class="form-group"> 
+                     <label asp-for="TableID" class="control-label"></label> 
+                     <select asp-for="TableID" class="form-control">
+                         <option value="@Html.DisplayFor(model => model.TableID)" selected>@Html.DisplayFor(model => model.TableID)</option>
+                     </select> 
+             </div>
         <br />
-        <div class="input-container">
-            <label class="w-40">Image</label>
-            <input type="file" asp-for="ImageFile">
-        </div>
-
+             <div class="form-group"> 
+                     <label asp-for="ReservationStatus" class="control-label"></label> 
+                     <select asp-for="ReservationStatus"  class="form-control" asp-items="new SelectList(ViewBag.Status,Model.ReservationStatus)">
+                         <option value="">Select Reservation Status</option> 
+                     </select> 
+             </div>
         <br />
-        <div class="input-container">
-            <label asp-for="Category" class="w-40">Category</label>
-            <select asp-items="Model.CategoryList" class="input" asp-for="Categories" multiple>
-                <option value="">--select--</option>
-            </select>
-        </div>
         <br />
         <button type="submit" class="btn btn-primary">Update</button>
-        <a asp-controller="product" asp-action="Index" class="btn btn-primary">Back To List</a>
+        <a asp-controller="Reservation" asp-action="Index" class="btn btn-primary">Back To List</a>
     </div>
 </form>
-
+@*
 @section Scripts{
-    @{
-        <partial name="_ValidationscriptsPartial" />
-    }
-    
-}
+    <partial name="_ValidationscriptsPartial" />
+}*@
+
+              @section Scripts{ 
+ <script>
+     $(function () {
+         $("select#Area").change(function () {
+             var area = $(this).val();
+
+             $("select#TableID").empty();
+
+             $.getJSON(`/Reservation/GetTableIdByArea?area=${area}`, function (data) {
+                 //console.log(data);
+                 $.each(data, function (i, item) {
+                     $("select#TableID").append(`<option value="${item.value}">${item.text}</option>`);
+                 });
+             });
+         })
+     });
+ </script>
+ }
