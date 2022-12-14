@@ -4,6 +4,10 @@ using System.Diagnostics;
 
 namespace ReservationApp.Controllers
 {
+    /// <summary>
+    /// This is the contorller for Home page.
+    /// </summary>
+
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
