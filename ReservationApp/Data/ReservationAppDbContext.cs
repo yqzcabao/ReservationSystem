@@ -31,15 +31,10 @@ namespace ReservationApp.Data
         //    base.OnModelCreating(modelBuilder);
         //}
 
-        public DbSet<ReservationApp.Models.Product> Product { get; set; }= default;
         public DbSet<ReservationApp.Models.Sitting> Sitting { get; set; } = default!;
         public DbSet<ReservationApp.Models.SittingTable> SittingTable { get; set; } = default!;
         public DbSet<ReservationApp.Models.Reservation> Reservation { get; set; } = default!;
-        public DbSet<ReservationApp.Models.ReservationSitting> ReservationSitting { get; set; } = default!;
-        public DbSet<ReservationApp.Models.Order> Order { get; set; } = default;
-        public DbSet<ReservationApp.Models.Stock> Stock { get; set; } = default!;
-
-       
+        public DbSet<ReservationApp.Models.ReservationSitting> ReservationSitting { get; set; } = default!;       
        
 
     }

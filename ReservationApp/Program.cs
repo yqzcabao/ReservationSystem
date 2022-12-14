@@ -9,14 +9,12 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ReservationAppDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("ReservationApp") ?? throw new InvalidOperationException("Connection string 'RetailWebSystemContext' not found.")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("AZURE_SQL_CONNECTIONSTRING") ?? throw new InvalidOperationException("Connection string 'RetailWebSystemContext' not found.")));
 
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
        .AddEntityFrameworkStores<ReservationAppDbContext>()
        .AddDefaultTokenProviders();
 
-builder.Services.AddScoped<IProductservices, ProductServices>();
-builder.Services.AddScoped<ISittingService, SittingService>();
 builder.Services.AddScoped<IFileService, FileService>();
 builder.Services.AddScoped<IUserService, UserService>();
 
@@ -38,6 +36,7 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
 
 app.MapControllerRoute(
     name: "default",

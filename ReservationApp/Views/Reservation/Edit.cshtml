@@ -48,12 +48,17 @@
                      </select> 
              </div>
         <br />
-             <div class="form-group"> 
+        @if (User.IsInRole("member"))
+        {
+            <input asp-for="ReservationStatus" hidden />
+        }else{
+            <div class="form-group"> 
                      <label asp-for="ReservationStatus" class="control-label"></label> 
                      <select asp-for="ReservationStatus"  class="form-control" asp-items="new SelectList(ViewBag.Status,Model.ReservationStatus)">
                          <option value="">Select Reservation Status</option> 
                      </select> 
              </div>
+        }
         <br />
         <br />
         <button type="submit" class="btn btn-primary">Update</button>

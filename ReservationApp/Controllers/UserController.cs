@@ -109,11 +109,30 @@ namespace ReservationApp.Controllers
             return RedirectToAction(nameof(ChangePassword));
         }
 
-        //To get all the users
-        public async Task<IActionResult> GetAllUsers()
+        //To get all the member
+        public async Task<IActionResult> GetAllMember()
         {
-            List<Users_in_Role_ViewModel> result = await _authService.GetAllUsers();
+            string roleSelect = "member";
+            List<Users_in_Role_ViewModel> result = await _authService.GetAllUsers(roleSelect);
             return View(result);
         }
+
+        //To get all the staff and admin
+        public async Task<IActionResult> GetAllStaff()
+        {
+            string roleSelect = "nonmember";
+            List<Users_in_Role_ViewModel> result = await _authService.GetAllUsers(roleSelect);
+            return View(result);
+        }
+
+        //Edit a user infomation
+        //Not finished yet
+        public IActionResult Edit(string id)
+        {
+            var singleUser = _authService.GetSingerUser(id).Result;
+            return View(singleUser);
+        }
+
+
     }
 }

@@ -5,7 +5,7 @@ namespace ReservationApp.Models
     public class RegistrationModel
     {
         [Key]
-        public int RegistrationID { get; set; }
+        public string RegistrationID { get; set; }
         [Required]
         public string FirstName { get; set; }
         [Required]
@@ -26,5 +26,16 @@ namespace ReservationApp.Models
         [Compare("Password")]
         public string PasswordConfirm { get; set; }
         public string? Role { get; set; }
+    }
+
+    public class Users_in_Role_ViewModel
+    {
+        public string UserId { get; set; }
+        public string UserName { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Email { get; set; }
+        public string MobilePhone { get; set; }
+        public string Role { get; set; }
     }
 }

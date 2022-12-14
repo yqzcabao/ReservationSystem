@@ -98,6 +98,8 @@ namespace ReservationApp.Services
                 }
                 status.StatusCode = 1;
                 status.Message = "Logged in successfully";
+
+
             }
             else if (signInResult.IsLockedOut)
             {
@@ -148,7 +150,7 @@ namespace ReservationApp.Services
         }
 
         //Get all the users
-        public async Task<List<Users_in_Role_ViewModel>> GetAllUsers()
+        public async Task<List<Users_in_Role_ViewModel>> GetAllUsers(string roleSelect)
         {
                         
             var users = userManager.Users.ToList();
@@ -164,9 +166,41 @@ namespace ReservationApp.Services
                 model.UserName = user.UserName;
                 var roles = userManager.GetRolesAsync(user);
                 model.Role = roles.Result[0];
-                result.Add(model);
+                if(roleSelect == "member")
+                {
+                    if(model.Role == "member")
+                    {
+                        result.Add(model);
+                    }
+                }
+                else
+                {
+                    if(model.Role == "admin" || model.Role == "staff")
+                    {
+                        result.Add(model);
+                    }
+                }
+                
             }
             return result;
+        }
+
+        //get single user by user id
+        public async Task<RegistrationModel> GetSingerUser(string userID)
+        {
+            var user = userManager.Users.First(m => m.Id == userID);
+            RegistrationModel model = new RegistrationModel();
+            model.RegistrationID = user.Id;
+            model.Email = user.Email;
+            model.FirstName = user.FirstName;
+            model.LastName = user.LastName;
+            model.MobilePhone = user.PhoneNumber;
+            model.UserName = user.UserName;
+            var roles = userManager.GetRolesAsync(user);
+            model.Role = roles.Result[0];
+            model.Password =user.PasswordHash;
+            model.PasswordConfirm = user.PasswordHash;
+            return model;
         }
 
     }

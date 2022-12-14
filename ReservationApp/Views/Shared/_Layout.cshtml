@@ -1,5 +1,30 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Identity
+@using ReservationApp.Data;
+@inject UserManager<ApplicationUser> userManager
+@{
     string userName = User.Identity.Name;
+    ApplicationUser user = new ApplicationUser();
+    ApplicationUser currentUser = new ApplicationUser();
+    string userRole = "";
+    if (!string.IsNullOrEmpty(userName))
+    {
+        user = userManager.GetUserAsync(User).Result;
+        var userID = user.Id;
+         currentUser = userManager.Users.First(m => m.Id == userID);
+        
+        if (User.IsInRole("staff"))
+        {
+            userRole = "Staff";
+        }
+        if (User.IsInRole("admin"))
+        {
+            userRole = "Admin";
+        }
+        if (User.IsInRole("member"))
+        {
+            userRole = "Member";
+        }
+    }
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -35,13 +60,21 @@
                     <a class="nav-link" asp-area="" asp-controller="SittingTable" asp-action="Index">SittingTable</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" asp-area="" asp-controller="User" asp-action="CreateStaff">Add a Staff</a>
+                    <a class="nav-link" asp-area="" asp-controller="User" asp-action="GetAllMember">Member List</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-area="" asp-controller="User" asp-action="GetAllStaff">Staff List</a>
                 </li>
             }
-
+            @if (User.IsInRole("staff"))
+            {
+                <li class="nav-item">
+                    <a class="nav-link" asp-area="" asp-controller="User" asp-action="GetAllMember">Member List</a>
+                </li>
+            }
            
             <li class="nav-item">
-                <a class="nav-link" href="#">About</a>
+                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="About">About</a>
             </li>
             </ul>
             <ul>
@@ -59,6 +92,9 @@
             <ul>
                 @if (!string.IsNullOrEmpty(userName))
                 {
+                     <li class="nav-item">
+                        <a class="nav-link">@currentUser.FirstName @currentUser.LastName (@userRole)</a>
+                    </li>                   
                     <li class="nav-item">
                         <a class="nav-link" asp-area="" asp-controller="User" asp-action="Logout">Logout</a>
                     </li>
