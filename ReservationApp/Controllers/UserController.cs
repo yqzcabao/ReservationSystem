@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ReservationApp.Services;
 using ReservationApp.Models;
+using ReservationApp.Data;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace ReservationApp.Controllers
 {
@@ -9,10 +11,12 @@ namespace ReservationApp.Controllers
     {
 
         private readonly IUserService _authService;
+        IFileService _IFService;
 
-        public UserController(IUserService authService)
+        public UserController(IUserService authService, IFileService iFService)
         {
             _authService = authService;
+            _IFService = iFService;
         }
 
         public IActionResult MemberRegistration()
@@ -25,6 +29,19 @@ namespace ReservationApp.Controllers
         {
             if (!ModelState.IsValid) { return View(model); }
             model.Role = "member";
+
+            if (model.ImageFile != null)
+            {
+                var fileReult = this._IFService.SaveImage(model.ImageFile);
+                if (fileReult.Item1 == 0)
+                {
+                    TempData["msg"] = "File could not saved";
+                    return View(model);
+                }
+                var imageName = fileReult.Item2;
+                model.Image = imageName;
+            }
+
             var result = await _authService.RegisterAsync(model);
             TempData["msg"] = result.Message;
             return RedirectToAction(nameof(MemberRegistration));
@@ -41,6 +58,19 @@ namespace ReservationApp.Controllers
         {
             if (!ModelState.IsValid) { return View(model); }
             model.Role = "admin";
+
+            if (model.ImageFile != null)
+            {
+                var fileReult = this._IFService.SaveImage(model.ImageFile);
+                if (fileReult.Item1 == 0)
+                {
+                    TempData["msg"] = "File could not saved";
+                    return View(model);
+                }
+                var imageName = fileReult.Item2;
+                model.Image = imageName;
+            }
+
             var result = await _authService.RegisterAsync(model);
             TempData["msg"] = result.Message;
             return RedirectToAction(nameof(CreateAdmin));
@@ -57,6 +87,19 @@ namespace ReservationApp.Controllers
         {
             if (!ModelState.IsValid) { return View(model); }
             model.Role = "staff";
+
+            if (model.ImageFile != null)
+            {
+                var fileReult = this._IFService.SaveImage(model.ImageFile);
+                if (fileReult.Item1 == 0)
+                {
+                    TempData["msg"] = "File could not saved";
+                    return View(model);
+                }
+                var imageName = fileReult.Item2;
+                model.Image = imageName;
+            }
+
             var result = await _authService.RegisterAsync(model);
             TempData["msg"] = result.Message;
             return RedirectToAction(nameof(CreateStaff));

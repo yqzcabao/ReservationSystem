@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Staff List";
+    int i = 1;
 }
 
 
@@ -22,7 +23,11 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.UserId)
+                @*@Html.DisplayNameFor(model => model.UserId)*@
+                ID
+            </th>
+            <th>
+                Avatar
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.FirstName)
@@ -49,7 +54,11 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.UserId)
+                @*@Html.DisplayFor(modelItem => item.UserId)*@
+                @i
+            </td>
+            <td>                
+                <img style="height:70px;width:80px" src="../Uploads/@item.Image"/>            
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.FirstName)
@@ -75,6 +84,7 @@
                 @*<a asp-action="Delete" asp-route-id="@item.UserId" class="btn btn-outline-primary mx-4">Delete</a>*@
             </td>
         </tr>
+        i = i + 1;
 }
     </tbody>
 </table>

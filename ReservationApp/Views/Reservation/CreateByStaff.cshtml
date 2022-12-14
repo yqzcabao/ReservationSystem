@@ -11,38 +11,38 @@
         <div class="row pb-2">
             <h5 class="text" style="align-content:center">----Customer Details----</h5>
         </div>
-        <div class="mb-2">
+        <div class="mb-3">
            @* <div asp-validation-summary="All" class="text-danger"></div>*@
             <label>First Name</label>
             <input asp-for="FirstName" class="form-control" />
             <span asp-validation-for="FirstName" class="text-danger"></span>
         </div>
-        <div class="mb3">
+        <div class="mb-3">
             <label>Last Name</label>
             <input asp-for="LastName" class="form-control"/>
             <span asp-validation-for="LastName" class="text-danger"></span>
         </div>
-        <div class="mb3">
+        <div class="mb-3">
             <label >User Name</label>
             <input asp-for="UserName" class="form-control"/>
             <span asp-validation-for="UserName" class="text-danger"></span>
         </div>
-        <div class="mb3">
+        <div class="mb-3">
             <label >Email</label>
             <input asp-for="Email" class="form-control"/>
             <span asp-validation-for="Email" class="text-danger"></span>
         </div>
-        <div class="mb3">
+        <div class="mb-3">
             <label>Phone</label>
             <input asp-for="MobilePhone" class="form-control" />
             <span asp-validation-for="MobilePhone" class="text-danger"></span>
         </div>
-        <div class="mb3">
+        <div class="mb-3">
             <label >Password</label>
             <input asp-for="Password" class="form-control" value="Test@123456"/>
             <span asp-validation-for="Password" class="text-danger"></span>
         </div>
-        <div class="mb3">
+        <div class="mb-3">
             <label>Confirm Password</label>
             <input asp-for="PasswordConfirm" class="form-control" value="Test@123456"/>
             <span asp-validation-for="PasswordConfirm" class="text-danger"></span>
@@ -52,23 +52,23 @@
             <h5 class="text" style="align-content:center">----Reservation Details----</h5>
         </div>
 
-        <div class="mb-2">
+        <div class="mb-3">
            @* <div asp-validation-summary="All" class="text-danger"></div>*@
             <label asp-for="StartDateTime" class="control-label"></label>
             <input asp-for="StartDateTime" class="form-control" type="datetime-local"/>
             <span asp-validation-for="StartDateTime" class="text-danger"></span>
         </div>
-        <div class="mb3">
+        <div class="mb-3">
             <label asp-for="Duration" class="control-label"></label>
             <input asp-for="Duration" class="form-control" type="number"/>
             <span asp-validation-for="Duration" class="text-danger"></span>
         </div>
-        <div class="mb3">            
+        <div class="mb-3">            
             <label asp-for="NumberOfGuests" class="control-label"></label>
             <input asp-for="NumberOfGuests" class="form-control" type="number"/>
             <span asp-validation-for="NumberOfGuests" class="text-danger"></span>
         </div>
-        <div class="mb3">            
+        <div class="mb-3">            
             <label asp-for="AdditionNotes" class="control-label"></label>
             <input asp-for="AdditionNotes" class="form-control"/>
             <span asp-validation-for="AdditionNotes" class="text-danger"></span>

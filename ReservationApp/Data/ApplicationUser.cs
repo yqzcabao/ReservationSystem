@@ -9,6 +9,8 @@ namespace ReservationApp.Data
         public string FirstName { get; set; }
         [Required]
         public string LastName { get; set; }
+        //for the user's profile image
+        public string? Image { get; set; }
         
     }
 }

@@ -18,7 +18,7 @@ namespace ReservationApp.Services
             this.roleManager = roleManager;
             this.signInManager = signInManager;
 
-        }
+        }        
 
         // Register to the system
         public async Task<Status> RegisterAsync(RegistrationModel model)
@@ -31,6 +31,7 @@ namespace ReservationApp.Services
                 status.Message = "User already exist";
                 return status;
             }
+
             ApplicationUser user = new ApplicationUser()
             {
                 PhoneNumber = model.MobilePhone,
@@ -39,8 +40,9 @@ namespace ReservationApp.Services
                 UserName = model.UserName,
                 FirstName = model.FirstName,
                 LastName = model.LastName,
-                EmailConfirmed = true,                
+                EmailConfirmed = true,
                 PhoneNumberConfirmed = true,
+                Image = model.Image,
             };
             var result = await userManager.CreateAsync(user, model.Password);
             if (!result.Succeeded)
@@ -164,6 +166,7 @@ namespace ReservationApp.Services
                 model.LastName = user.LastName;
                 model.MobilePhone = user.PhoneNumber;
                 model.UserName = user.UserName;
+                model.Image = user.Image;
                 var roles = userManager.GetRolesAsync(user);
                 model.Role = roles.Result[0];
                 if(roleSelect == "member")

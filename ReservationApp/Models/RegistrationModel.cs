@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ReservationApp.Models
 {
@@ -26,6 +27,9 @@ namespace ReservationApp.Models
         [Compare("Password")]
         public string PasswordConfirm { get; set; }
         public string? Role { get; set; }
+        public string? Image { get; set; }
+        [NotMapped]
+        public IFormFile ImageFile { get; set; }
     }
 
     public class Users_in_Role_ViewModel
@@ -37,5 +41,6 @@ namespace ReservationApp.Models
         public string Email { get; set; }
         public string MobilePhone { get; set; }
         public string Role { get; set; }
+        public string Image { get; set; }
     }
 }
